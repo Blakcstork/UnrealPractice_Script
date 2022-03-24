@@ -33,6 +33,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void tempFunc();
+
+	UFUNCTION(BlueprintCallable, Category = "Damage")
 	void CalculateDPS();
 
 	virtual void PostInitProperties() override;
