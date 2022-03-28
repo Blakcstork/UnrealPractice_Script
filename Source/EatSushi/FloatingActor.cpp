@@ -18,6 +18,12 @@ void AFloatingActor::BeginPlay()
 	Super::BeginPlay();
 	
 	UE_LOG(LogTemp, Log, TEXT("Log Message"));
+
+	FString CharacterName = TEXT("HiWer");
+	UE_LOG(LogTemp, Log, TEXT("Character name = %s"), *CharacterName);
+
+	bool isAttackable = true;
+	UE_LOG(LogTemp, Log, TEXT("Is Attackable? = %s"), isAttackable ? TEXT("true") : TEXT("false"));
 }
 
 // Called every frame
