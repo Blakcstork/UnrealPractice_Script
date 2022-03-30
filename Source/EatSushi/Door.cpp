@@ -40,7 +40,7 @@ void ADoor::Open() {
 	}
 
 	FRotator rotation = GetActorRotation();
-	rotation = rotation + FRotator(0.0f, FMath::Lerp(0.0f, 90.0f, DoorDeltaTime), 0.0f);
+	rotation = OriginRotation + FRotator(0.0f, FMath::Lerp(0.0f, 90.0f, DoorDeltaTime), 0.0f);
 	SetActorRotation(rotation);
 	if (DoorDeltaTime > 1.0f) {
 		GetWorldTimerManager().ClearTimer(DoorTimerHandle);
@@ -58,5 +58,9 @@ void ADoor::Close()
 	}
 
 	FRotator rotation = GetActorRotation();
-	rotation = rotation + FRotator(0.0f, FMath::Lerp(90.0f, 0.0f, DoorDeltaTime), 0.0f);
+	rotation = OriginRotation + FRotator(0.0f, FMath::Lerp(90.0f, 0.0f, DoorDeltaTime), 0.0f);
+	SetActorRotation(rotation);
+	if (DoorDeltaTime > 1.0f) {
+		GetWorldTimerManager().ClearTimer(DoorTimerHandle);
+	}
 }
