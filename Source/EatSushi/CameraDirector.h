@@ -6,6 +6,19 @@
 #include "GameFramework/Actor.h"
 #include "CameraDirector.generated.h"
 
+USTRUCT(Atomic, BlueprintType)
+struct FChangeCameraData
+{
+	GENERATED_USTRUCT_BODY();
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		AActor* Camera;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float TimeBeteweenCameraChanges;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float SmoothBlendTime;
+};
+
 UCLASS()
 class EATSUSHI_API ACameraDirector : public AActor
 {
@@ -24,10 +37,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	AActor* CameraOne;
+		TArray<FChangeCameraData> Cameras;
+
+	int32 NowCameraIndex;
+
 	UPROPERTY(EditAnywhere)
-	AActor* CameraTwo;
-	UPROPERTY(EditAnywhere)
+	//AActor* CameraOne;
+	//UPROPERTY(EditAnywhere)
+	//AActor* CameraTwo;
+	//UPROPERTY(EditAnywhere)
 	float TimetoNextCameraChange;
 
 };

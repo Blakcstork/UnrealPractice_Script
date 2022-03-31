@@ -4,6 +4,7 @@
 #include "CameraDirector.h"
 #include <Kismet/GameplayStatics.h>
 
+
 // Sets default values
 ACameraDirector::ACameraDirector()
 {
@@ -29,16 +30,35 @@ void ACameraDirector::Tick(float DeltaTime)
 
 	TimetoNextCameraChange -= DeltaTime;
 	if (TimetoNextCameraChange <= 0.0f) {
+		
+		FChangeCameraData NowCamera = Cameras[NowCameraIndex];
+
+
 		TimetoNextCameraChange += TimeBetweenCameraChanges;
 
 		APlayerController* controller = UGameplayStatics::GetPlayerController(this, 0);
 		if (controller) {
+			if ((controller->GetViewTarget() != NowCamera.Camera) && (NowCamera.Camera != nullptr)) {
+				if (NowCamera.SmoothBlendTime <= 0.0f) {
+					controller->SetViewTarget(NowCamera.Camera);
+				}
+				else {
+					controller->SetViewTargetWithBlend(NowCamera.Camera, NowCamera.SmoothBlendTime);
+				}
+			}
+			/*
 			if ((controller->GetViewTarget() != CameraOne) && (CameraOne != nullptr)) {
 				controller->SetViewTarget(CameraOne);
 			}
 			else if ((controller->GetViewTarget() != CameraTwo) && (CameraTwo != nullptr)) {
 				controller->SetViewTargetWithBlend(CameraTwo, SmoothBlendTime);
 			}
+			*/
+		}
+
+		NowCameraIndex++;
+		if (NowCameraIndex >= Cameras.Num()) {
+			NowCameraIndex = 0;
 		}
 	}
 }
