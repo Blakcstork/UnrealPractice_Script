@@ -38,7 +38,13 @@ void AMyPawn::Tick(float DeltaTime)
 	{
 		float CurrentScale = OurVisibleComponent->GetComponentScale().X;
 		if (bGrowing) {
-			CurrentScale += DeltaTime;
+			if (InputTime > 0.0f && InputTime <= 0.5f) {
+				CurrentScale = 2.0f;
+			}
+			else {
+				CurrentScale += DeltaTime;
+			}
+			
 		}
 		else {
 			CurrentScale -= DeltaTime * 0.5f;
